@@ -1,0 +1,17 @@
+{
+  "name": "claude-orderhub-plugin",
+  "owner": {
+    "name": "Pixfizz Ltd",
+    "email": "support@pixfizz.com",
+    "url": "https://pixfizz.com"
+  },
+  "plugins": [
+    {
+      "name": "orderhub",
+      "source": "./plugins/orderhub",
+      "version": "0.1.0",
+      "description": "Interrogate your OrderHub organisation from Claude Code — daily briefing, pickup queue, order lookup, sales metrics.",
+      "homepage": "https://github.com/richardcharnley0404/claude-orderhub-plugin"
+    }
+  ]
+}
