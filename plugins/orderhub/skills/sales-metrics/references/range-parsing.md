@@ -1,6 +1,6 @@
 # Sales Metrics — Range Parsing
 
-The user-supplied range argument is parsed into an ISO date pair `{ from, to }`. `to` is always today (end of day in the user's locale).
+The user-supplied range argument is parsed into an ISO date pair `{ from, to }`. For current-period inputs (`today`, `7d`, `30d`, `mtd`, `qtd`, `ytd`) `to` is the end of today in the user's locale. For past-period inputs (`yesterday`, `last week`, `last month`) `to` is the end of that past window — see the table below for exact values.
 
 ## Recognised inputs
 

@@ -13,11 +13,13 @@ Show the lab owner what's ready for collection right now, what'll be ready this 
 
 ## Rendering
 
-Group orders into three buckets based on `ready_date` relative to today:
+Group orders into three buckets. Bucketing is mutually exclusive — evaluate in this order, first match wins:
 
-1. **Ready today** — `ready_date <= today` AND `days_waiting < 7`
-2. **Overdue** — `ready_date <= today` AND `days_waiting >= 7`
-3. **Ready this week** — `ready_date > today` AND `ready_date <= today + 7 days`
+1. **Overdue** — `days_waiting >= 7` (regardless of `ready_date`). An order placed 8+ days ago belongs here even if `ready_date` is still in the future — that's a job the lab is taking too long on, which the owner needs to see.
+2. **Ready today** — not overdue AND `ready_date <= today`.
+3. **Ready this week** — not overdue AND `ready_date > today` AND `ready_date <= today + 7 days`.
+
+Orders that are neither overdue nor ready within 7 days (ready further in the future) are not surfaced — they're not actionable for collection yet.
 
 Output structure:
 

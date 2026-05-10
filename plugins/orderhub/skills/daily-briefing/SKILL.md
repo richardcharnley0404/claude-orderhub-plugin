@@ -32,7 +32,10 @@ After the main briefing:
    ```
    📦 OrderHub plugin v<latest> available. Run /plugin update orderhub to refresh.
    ```
-4. Rate-limit: before showing the footer, attempt to read `${CLAUDE_PLUGIN_DATA}/last_update_nudge.txt`. If the file's contents (an ISO date) match today's date, skip the footer. Otherwise show it and write today's date to that file.
+4. Rate-limit, in three sub-steps:
+   a. **Check:** read `${CLAUDE_PLUGIN_DATA}/last_update_nudge.txt`. If the file exists and its contents (an ISO date `YYYY-MM-DD`) match today's date, skip the footer entirely and stop.
+   b. **Show:** otherwise, append the footer text to the briefing.
+   c. **Write (mandatory):** after appending, write today's ISO date to `${CLAUDE_PLUGIN_DATA}/last_update_nudge.txt`. Without this write the footer will re-appear every time `/orderhub:daily` runs today — defeating the rate limit.
 5. If the version comparison fails or any of the above errors, just skip the footer — never let the update nudge break the briefing.
 
 ## What NOT to do

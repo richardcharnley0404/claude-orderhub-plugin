@@ -11,7 +11,7 @@ Find one order and render its full detail.
 
 The user query can be:
 
-1. A bare order number (e.g. `4521`, `#4521`, `1234`) — call `get_order` with that number directly.
+1. A bare order number (e.g. `4521`, `#4521`, `1234`) — call `get_order` with that number directly. If `get_order` returns "not found" (the backend may expect a UUID rather than a customer-facing order number), fall back to `search_orders` with `q=<number>`, then call `get_order` on the resolved id.
 2. A name or email or phone fragment (e.g. `Smith`, `jane@example.com`, `07700`) — call `search_orders` first with `q=<fragment>`. If exactly one result, proceed with `get_order` on its id. If multiple, list them as a numbered shortlist (max 10) and ask the user to pick. If zero, render `No orders found matching "<query>".`
 3. Ambiguous (looks like neither a number nor a name) — try `search_orders` first.
 

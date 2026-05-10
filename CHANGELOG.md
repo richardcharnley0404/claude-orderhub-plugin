@@ -18,3 +18,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Plugin-update nudge in `daily-briefing` (rate-limited daily, sourced from `get_plugin_status`).
 - README with install steps and lab-owner-facing overview.
 - MIT license.
+
+### Fixed
+- Daily-briefing rate-limit step now writes the marker file unambiguously after appending the footer (prevents the nudge from re-firing within the same day).
+- Pickup-queue bucket logic now catches orders aged 7+ days even when `ready_date` is still in the future.
+- Order-lookup falls back to `search_orders` when a bare order number doesn't resolve via `get_order` directly.
+- Range-parsing reference no longer claims `to` is "always today" — past-period ranges now correctly described.
+- Daily-briefing "no write tools" rule clarified to exclude only MCP write tools, not the filesystem `Write` tool used by the rate-limit step.
