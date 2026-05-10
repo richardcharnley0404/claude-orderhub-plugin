@@ -1,0 +1,27 @@
+{
+  "name": "orderhub",
+  "version": "0.1.0",
+  "description": "OrderHub for Claude Code — read-only briefings, queues, order lookups, and sales metrics for lab owners.",
+  "author": {
+    "name": "Pixfizz Ltd",
+    "email": "support@pixfizz.com"
+  },
+  "homepage": "https://github.com/richardcharnley0404/claude-orderhub-plugin",
+  "userConfig": {
+    "api_token": {
+      "type": "string",
+      "title": "OrderHub access token",
+      "description": "Generate at https://app.orderhub.io/settings/tokens",
+      "sensitive": true
+    }
+  },
+  "mcpServers": {
+    "orderhub": {
+      "type": "http",
+      "url": "https://mcp.orderhub.io/mcp",
+      "headers": {
+        "Authorization": "Bearer ${user_config.api_token}"
+      }
+    }
+  }
+}
