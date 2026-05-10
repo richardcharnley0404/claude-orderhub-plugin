@@ -92,14 +92,14 @@ Unique index on `token_hash`. RLS: owners can SELECT/UPDATE their own rows.
     "api_token": {
       "type": "string",
       "title": "OrderHub access token",
-      "description": "Generate at https://app.orderhub.io/settings/tokens",
+      "description": "Generate at https://orderhub.pixfizz.com/organizations (API tab)",
       "sensitive": true
     }
   },
   "mcpServers": {
     "orderhub": {
       "type": "http",
-      "url": "https://mcp.orderhub.io/mcp",
+      "url": "https://nazkcvruighrhpgcarxg.supabase.co/functions/v1/mcp",
       "headers": { "Authorization": "Bearer ${user_config.api_token}" }
     }
   }

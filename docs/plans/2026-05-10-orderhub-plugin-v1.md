@@ -1130,7 +1130,7 @@ UPDATE app_settings SET value = '0.1.0', updated_at = now() WHERE key = 'plugin_
 
 - [ ] **Step 6: Test revoked-token UX**
 
-Revoke the smoke-test token in OH web Settings. Run `/orderhub:daily` again. Expected: a clear failure message ("Authentication failed — your OrderHub access token may have been revoked. Generate a new one at https://app.orderhub.io/settings/tokens and update via /plugin config orderhub.") rather than a silent crash.
+Revoke the smoke-test token in OH web Settings. Run `/orderhub:daily` again. Expected: a clear failure message ("Authentication failed — your OrderHub access token may have been revoked. Generate a new one at https://orderhub.pixfizz.com/organizations (API tab) and update via /plugin config orderhub.") rather than a silent crash.
 
 (The exact phrasing of this failure message is TBD — file an enhancement issue if the UX is too rough. v1 acceptable bar: "user can tell something's wrong with auth.")
 
@@ -1230,7 +1230,7 @@ If you use Claude Code (claude.com/code), you can now ask Claude about your Orde
   /plugin marketplace add richardcharnley0404/claude-orderhub-plugin
   /plugin install orderhub
 
-You'll be prompted for a personal access token — generate one at https://app.orderhub.io/settings/tokens. The plugin self-updates as we ship more workflows.
+You'll be prompted for a personal access token — generate one at https://orderhub.pixfizz.com/organizations (API tab). The plugin self-updates as we ship more workflows.
 
 Read-only for now; write actions (notes, inventory adjustments) coming in v0.2.
 

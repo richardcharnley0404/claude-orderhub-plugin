@@ -26,7 +26,7 @@ You can also ask in plain English — "what's our queue look like?", "show me ye
 
 You'll be prompted for a personal access token. Generate one at:
 
-> https://app.orderhub.io/settings/tokens *(coming soon)*
+> https://orderhub.pixfizz.com/organizations → API tab
 
 Paste it into Claude Code and you're ready.
 
