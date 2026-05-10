@@ -1,6 +1,6 @@
 {
   "name": "orderhub",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OrderHub for Claude Code — read-only briefings, queues, order lookups, and sales metrics for lab owners.",
   "author": {
     "name": "Pixfizz Ltd",

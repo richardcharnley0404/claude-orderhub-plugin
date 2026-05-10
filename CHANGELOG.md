@@ -7,6 +7,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-05-10
+
+### Added
+- README rewritten to position the OrderHub MCP as the primary integration with three install paths: Claude Desktop, Claude.ai web, and Claude Code (the existing plugin). Claude Code is now framed as the developer / power-user channel rather than the only option.
+- New `docs/claude-ai-project.md` — Claude.ai Project template with system instructions that recreate the Claude Code plugin's polished workflow rendering (daily briefing, pickup queue, order lookup, sales metrics) for users on Claude Desktop or Claude.ai web.
+
+### Notes
+- No code or skill changes — this is a docs-only release expanding the audience surface. The Claude Code plugin behaviour and version contract are unchanged.
+
 ## [0.1.0] — 2026-05-10
 
 ### Added

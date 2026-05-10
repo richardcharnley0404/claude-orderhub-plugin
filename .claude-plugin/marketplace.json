@@ -9,8 +9,8 @@
     {
       "name": "orderhub",
       "source": "./plugins/orderhub",
-      "version": "0.1.0",
-      "description": "Interrogate your OrderHub organisation from Claude Code — daily briefing, pickup queue, order lookup, sales metrics.",
+      "version": "0.1.1",
+      "description": "Interrogate your OrderHub organisation from Claude — daily briefing, pickup queue, order lookup, sales metrics. Works on Claude Desktop, Claude.ai web, and Claude Code.",
       "homepage": "https://github.com/richardcharnley0404/claude-orderhub-plugin"
     }
   ]
