@@ -37,6 +37,6 @@ After the main briefing:
 
 ## What NOT to do
 
-- Don't call any write tools.
+- Don't call any MCP write tools (e.g. `update_job_status`). The Read and Write filesystem tools may be used, but only for the rate-limit marker file in step 4 above.
 - Don't speculate ("revenue is probably down because…"). Stick to the numbers.
 - Don't ask the user follow-up questions — this is a one-shot summary.
