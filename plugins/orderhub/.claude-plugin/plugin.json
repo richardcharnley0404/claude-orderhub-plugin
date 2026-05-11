@@ -1,7 +1,7 @@
 {
   "name": "orderhub",
-  "version": "0.1.2",
-  "description": "OrderHub for Claude Code — read-only briefings, queues, order lookups, and sales metrics for lab owners.",
+  "version": "0.2.0",
+  "description": "OrderHub for Claude — read-only briefings, queues, order lookups, and sales metrics. Skill layer of the two-plugin model; pair with the OrderHub Authenticator plugin generated from orderhub.pixfizz.com for Cowork / Claude Desktop.",
   "author": {
     "name": "Pixfizz Ltd",
     "email": "support@pixfizz.com"
@@ -10,15 +10,15 @@
   "userConfig": {
     "api_token": {
       "type": "string",
-      "title": "OrderHub access token",
-      "description": "Generate at https://orderhub.pixfizz.com/organizations (API tab)",
+      "title": "OrderHub access token (Claude Code only)",
+      "description": "For Claude Code users only — generate a Personal access token at https://orderhub.pixfizz.com/organizations (API tab). Cowork and Claude Desktop users do NOT paste a token here; they install the OrderHub Authenticator plugin instead.",
       "sensitive": true
     }
   },
   "mcpServers": {
     "orderhub": {
       "type": "http",
-      "url": "https://nazkcvruighrhpgcarxg.supabase.co/functions/v1/mcp?token=${user_config.api_token}",
+      "url": "https://nazkcvruighrhpgcarxg.supabase.co/functions/v1/mcp",
       "headers": {
         "Authorization": "Bearer ${user_config.api_token}"
       }

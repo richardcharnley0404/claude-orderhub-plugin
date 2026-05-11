@@ -7,6 +7,22 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-05-11
+
+### Changed
+- **Two-plugin install model** is now the recommended path for Cowork / Claude Desktop users. The OrderHub web app's API Integrations page (Integration Type = "Claude Desktop") generates a per-user "OrderHub Authenticator" `.plugin` file that registers the MCP connector. This marketplace plugin then runs alongside it, providing the auto-updating skills and slash commands. Architecture proven end-to-end empirically: connector persists across plugin uninstalls; marketplace plugin's skills route through the connector via `mcp__orderhub__<tool>`.
+- README rewritten around the two-plugin model. Cowork / Claude Desktop path is now the Authenticator download flow; Claude Code path is unchanged (marketplace install + paste PAT).
+- Plugin manifest: `userConfig.api_token` description clarified to be Claude Code-only; MCP URL no longer carries the `?token=${user_config.api_token}` interpolation experiment from 0.1.2 (Cowork never honoured `${user_config.X}` substitution; the experiment was inconclusive and removed).
+- Plugin manifest: `mcpServers.orderhub.url` reverts to the bare endpoint without query params. Auth is via `Authorization: Bearer ${user_config.api_token}` header only (Claude Code resolves the interpolation; Cowork never reaches this code path because the Authenticator plugin's connector takes precedence).
+
+### Fixed
+- Empirical Cowork investigation confirmed: literal Bearer headers in plugin manifests are not forwarded to the MCP server by Cowork, and `${user_config.X}` substitution is Claude Code-only. The 0.2.0 architecture works around both by routing Cowork users through the OrderHub-generated Authenticator plugin instead.
+
+## [0.1.2] — 2026-05-10
+
+### Changed
+- Test commit: added `?token=${user_config.api_token}` to MCP URL alongside the Bearer header. Probe to test whether Claude Code expanded `${user_config.X}` interpolation inside the URL field. Bearer header retained so auth kept working. Empirical result via Cowork connector panel: Cowork stored the URL with the literal placeholder (no substitution). Experiment retired in v0.2.0.
+
 ## [0.1.1] — 2026-05-10
 
 ### Added

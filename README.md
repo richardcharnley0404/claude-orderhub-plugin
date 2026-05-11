@@ -1,111 +1,108 @@
 # OrderHub for Claude
 
-Ask Claude about your OrderHub organisation in plain English — daily briefings, pickup queue, order lookups, sales metrics. Works on Claude Desktop, Claude.ai web, and Claude Code.
+Ask Claude about your OrderHub organisation in plain English — daily briefings, pickup queue, order lookups, sales metrics — without leaving the chat. Works in **Cowork**, **Claude Desktop**, and **Claude Code**.
 
-This repo ships:
+## Two-plugin model
 
-1. The **`claude-orderhub-plugin`** — for Claude Code users (developers / power users).
-2. **Setup instructions** for Claude Desktop and Claude.ai web — most lab owners want this path.
-3. A **Project template** for Claude.ai that gives Desktop / web users the same polished briefings the Claude Code plugin renders. See [`docs/claude-ai-project.md`](docs/claude-ai-project.md).
+OrderHub for Claude ships as two plugins that work together:
 
-All three connect to the same OrderHub MCP server, so the tool surface and access control are identical no matter which one you use.
+| Plugin | Role | Where it comes from |
+|---|---|---|
+| **OrderHub Authenticator** | Registers the OrderHub MCP connector in your Claude client. Install once per device, leave installed. | Downloaded directly from your **OrderHub web app** → Settings → API Integrations → Download Plugin (on a "Claude Desktop" API key card). |
+| **OrderHub** (this repo) | Contains the auto-updating skills and slash commands (`/orderhub:daily`, etc.). | This GitHub marketplace, installable via Claude Code (developers) or — in a future release — directly into Cowork. |
 
-## What it does
+The Authenticator's job is one-and-done: register an MCP connector with your API key embedded. The connector persists in Claude's settings even if the Authenticator plugin is later uninstalled. The marketplace plugin's skills route through that persistent connector.
 
-| You ask Claude | Claude does |
+## Install — pick your client
+
+### Cowork / Claude Desktop (recommended for most lab owners)
+
+1. In your **OrderHub web app** → Settings → **API Integrations** → create or open an API key with **Integration Type = "Claude Desktop"**.
+2. On the key's card, click **Download Plugin**. A file named `OrderHub-Authenticator.plugin` downloads.
+3. In Cowork (or Claude Desktop): **Settings → Plugins** → drag the downloaded file in to install.
+4. Open a new chat. Ask: *"What OrderHub tools do you have?"* — you should see the OrderHub tool list. Try *"Show me today's OrderHub briefing."*
+
+To get the same polished briefing format the Claude Code plugin renders, also paste the system instructions from [`docs/claude-ai-project.md`](docs/claude-ai-project.md) into a Cowork / Claude.ai **Project** named "OrderHub Operations". Then open chats inside that Project for curated output.
+
+### Claude Code (developers / power users)
+
+```text
+/plugin marketplace add richardcharnley0404/claude-orderhub-plugin
+/plugin install orderhub@claude-orderhub-plugin
+```
+
+When prompted for the OrderHub access token, paste a Personal access token from your **OrderHub web app** → Settings → API tab → Personal access tokens. The token is stored in your OS keychain by Claude Code.
+
+This gives you the four curated slash commands (`/orderhub:daily`, `/orderhub:pickup`, `/orderhub:order <q>`, `/orderhub:sales [range]`) plus auto-updating skill rendering — without needing the Authenticator plugin path.
+
+## What you get
+
+| Ask Claude | Claude does |
 |---|---|
 | *"What's today's briefing?"* | Pulls today's revenue, queue health, ready-for-pickup count, and any orders needing attention. |
 | *"Show me the pickup queue."* | Lists orders ready for collection, grouped into Ready today / This week / Overdue. |
 | *"Where's order 4521?"* | Renders the full detail panel — line items, payment, customer, suggested next action. |
 | *"How were sales last week?"* | Revenue with delta vs prior week, top 5 products, turnaround time, on-time rate. |
 
-The same data is available to Claude on every platform. The Claude Code plugin adds polished formatting and slash-command shortcuts (`/orderhub:daily`, etc.) on top.
-
----
-
-## Install — pick your platform
-
-### Option 1: Claude Desktop (recommended for most lab owners)
-
-This is the path most lab owners want. Works on macOS and Windows.
-
-**1. Generate an OrderHub access token.** Go to https://orderhub.pixfizz.com/organizations → API tab → Personal access tokens → "Generate new token". Copy the value.
-
-**2. Open Claude Desktop's config file.**
-
-- **macOS:** `~/Library/Application Support/Claude/claude_desktop_config.json`
-- **Windows:** `%AppData%\Claude\claude_desktop_config.json`
-
-If the file doesn't exist yet, create it.
-
-**3. Add OrderHub to your `mcpServers`** (merge with anything already there):
-
-```json
-{
-  "mcpServers": {
-    "orderhub": {
-      "type": "http",
-      "url": "https://nazkcvruighrhpgcarxg.supabase.co/functions/v1/mcp",
-      "headers": {
-        "Authorization": "Bearer PASTE_YOUR_TOKEN_HERE"
-      }
-    }
-  }
-}
-```
-
-**4. Restart Claude Desktop.** The next time you open a chat you'll see the OrderHub tools available; Claude will use them automatically when you ask the right questions.
-
-**5. (Optional) Add the OrderHub Project template** — see [`docs/claude-ai-project.md`](docs/claude-ai-project.md) for system instructions that teach Claude to render daily briefings, pickup queues, and sales reports in the same polished format the Claude Code plugin uses.
-
-### Option 2: Claude.ai web
-
-Claude.ai's "Connect Apps" / Integrations UI may support custom HTTP MCP servers depending on your plan. If yours does, use the same URL and bearer-token configuration as the Claude Desktop instructions above.
-
-If your plan doesn't expose custom HTTP MCP setup in the web UI, the cleanest fallback is **Claude Desktop on the same machine** (Option 1) — Desktop and web share your account, but only Desktop reads the `claude_desktop_config.json` file.
-
-To get the same polished output formatting in a web chat, create a Claude.ai Project and paste the system instructions from [`docs/claude-ai-project.md`](docs/claude-ai-project.md).
-
-### Option 3: Claude Code (developers / power users)
-
-If you live in Claude Code already, install the plugin from this marketplace:
-
-```text
-/plugin marketplace add richardcharnley0404/claude-orderhub-plugin
-/plugin install orderhub
-```
-
-Paste your access token when prompted. You'll get the same tools plus four slash commands (`/orderhub:daily`, `/orderhub:pickup`, `/orderhub:order <q>`, `/orderhub:sales [range]`) and curated skill rendering wired in.
-
-Plugin updates flow automatically on session start; your token survives updates.
-
----
+Same data, every platform. Claude Code adds slash-command shortcuts.
 
 ## Token rotation & revocation
 
-Personal access tokens are managed at https://orderhub.pixfizz.com/organizations → API tab. You can:
+**Cowork / Claude Desktop users:**
+- Manage your Claude Desktop API keys at OrderHub web → Settings → API Integrations.
+- To rotate: deactivate the old key, create a new "Claude Desktop" key, click Download Plugin on the new card, install the fresh `.plugin` file in Cowork. The previous connector keeps working until you deactivate the old key.
+- To revoke an installed plugin's access immediately: deactivate the corresponding API key in OrderHub web.
 
-- See when each token was last used.
-- Revoke any token immediately — calls authenticated with that token will start failing right away.
-- Generate a new token to replace one — paste the new value into your Claude Desktop config / Claude Code prompt.
-
-Tokens never expire by default but you can opt into 30 / 90 / 365 day expiry per token. We recommend rotating annually.
-
----
+**Claude Code users:**
+- Manage Personal access tokens at OrderHub web → Settings → API tab.
+- Rotate via `/plugin config orderhub` (paste a new token) and revoke the old one in OrderHub.
 
 ## Updates
 
-Tool changes (new tools, improved descriptions, server-side fixes) ship the moment we deploy the OrderHub backend — no client action required. Every Claude install automatically picks them up on next call.
+The **marketplace plugin** auto-updates: new skills, refined output formatting, and tool surface changes flow on Claude Code session start (or via `/plugin marketplace update`). Your token and connector persist across updates.
 
-For the Claude Code plugin specifically (`docs/design.md`), version-pinned skill / slash-command updates flow via Claude Code's marketplace check on session start, or via `/plugin marketplace update` on demand. The daily-briefing surfaces a one-line nudge when a newer plugin version is available.
+The **Authenticator plugin** doesn't change often (it's just an MCP URL plus your API key). When server-side changes do require a new Authenticator (rare), the OrderHub web app's API Integrations page will say so — re-download and re-install.
 
----
+The MCP server itself is server-side, so tool changes, new tools, and bug fixes reach every install instantly — no client action needed.
+
+## Architecture
+
+```
+                  ┌──────────────────────────────────┐
+                  │ OrderHub web app                 │
+                  │ Settings → API Integrations      │
+                  │                                  │
+                  │  ┌────────────────────────────┐  │
+                  │  │ Key: "Laptop"  (Claude    │  │
+                  │  │  Desktop type)            │  │
+                  │  │ [ Download Plugin ]   ────┼──┼─→  user downloads file
+                  │  └────────────────────────────┘  │
+                  └──────────────────────────────────┘
+                                                      │
+                                          OrderHub-Authenticator.plugin
+                                                      │
+                                                      ▼
+       ┌───────────────────────────────────────────────────────┐
+       │ Cowork / Claude Desktop                                │
+       │                                                        │
+       │  Install plugin → MCP connector "orderhub" registers   │
+       │  pointing at /mcp-server/mcp?token=<key>              │
+       │  (persistent across plugin uninstall)                  │
+       │                                                        │
+       │  ──────────────────────────────────────────────       │
+       │                                                        │
+       │  Install OrderHub marketplace plugin (from GitHub):    │
+       │  Skills + slash commands call mcp__orderhub__<tool>   │
+       │  → routed through the persistent connector             │
+       │  → results synthesised into curated cards              │
+       └───────────────────────────────────────────────────────┘
+```
 
 ## Design & specs
 
 - [`docs/design.md`](docs/design.md) — full v1 design spec.
-- [`docs/plans/2026-05-10-orderhub-plugin-v1.md`](docs/plans/2026-05-10-orderhub-plugin-v1.md) — the implementation plan that built v0.1.0.
-- [`docs/claude-ai-project.md`](docs/claude-ai-project.md) — Claude.ai Project system instructions that mimic the polished plugin rendering.
+- [`docs/plans/2026-05-10-orderhub-plugin-v1.md`](docs/plans/2026-05-10-orderhub-plugin-v1.md) — implementation plan for v0.1.0.
+- [`docs/claude-ai-project.md`](docs/claude-ai-project.md) — Claude.ai Project system instructions that replicate the curated rendering for non-Claude-Code users.
 
 ## License
 
