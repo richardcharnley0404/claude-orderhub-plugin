@@ -18,7 +18,7 @@
   "mcpServers": {
     "orderhub": {
       "type": "http",
-      "url": "https://nazkcvruighrhpgcarxg.supabase.co/functions/v1/mcp",
+      "url": "https://nazkcvruighrhpgcarxg.supabase.co/functions/v1/mcp?token=${user_config.api_token}",
       "headers": {
         "Authorization": "Bearer ${user_config.api_token}"
       }
