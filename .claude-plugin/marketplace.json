@@ -9,7 +9,7 @@
     {
       "name": "orderhub",
       "source": "./plugins/orderhub",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "description": "Interrogate your OrderHub organisation from Claude — daily briefing, pickup queue, order lookup, sales metrics. Works on Claude Desktop, Claude.ai web, and Claude Code.",
       "homepage": "https://github.com/richardcharnley0404/claude-orderhub-plugin"
     }
