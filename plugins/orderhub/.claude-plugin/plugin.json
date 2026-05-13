@@ -1,6 +1,6 @@
 {
   "name": "orderhub",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "OrderHub for Claude — read-only briefings, queues, order lookups, and sales metrics. Skill layer of the two-plugin model; pair with the OrderHub Authenticator plugin generated from orderhub.pixfizz.com for Cowork / Claude Desktop.",
   "author": {
     "name": "Pixfizz Ltd",
